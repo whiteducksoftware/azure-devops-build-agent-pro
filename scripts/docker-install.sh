@@ -14,6 +14,3 @@ sudo add-apt-repository \
 sudo apt-get update && \
     sudo apt-get install -y --no-install-recommends \
     docker-ce
-echo "adding user to docker group"
-sudo usermod -aG docker azureuser
-newgrp docker
