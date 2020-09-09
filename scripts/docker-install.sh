@@ -12,5 +12,5 @@ sudo add-apt-repository \
     $(lsb_release -cs) \
     stable"
 sudo apt-get update && \
-    apt-get install -y --no-install-recommends \
+    sudo apt-get install -y --no-install-recommends \
     docker-ce
