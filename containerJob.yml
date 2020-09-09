@@ -1,6 +1,6 @@
 pool: "dbr-vmss-test"
-trigger:
-  - dbr-containerjob-test
+#trigger:
+#  - dbr-containerjob-test
 
 steps:
 - task: DockerInstaller@0
