@@ -14,7 +14,5 @@ sudo add-apt-repository \
 sudo apt-get update && \
     sudo apt-get install -y --no-install-recommends \
     docker-ce
-
-sudo groupadd docker
 sudo usermod -aG docker azureuser
 newgrp docker
