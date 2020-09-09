@@ -5,14 +5,16 @@ jobs:
   - job: dockerInstall
     steps:
       - task: ShellScript@2
+        displayName: run docker install script
         inputs:
           scriptPath: ./scripts/docker-install.sh
       - task: DockerInstaller@0
-        displayName: Docker Installer
+        displayName: Docker CLI Installer
         inputs:
           dockerVersion: 17.09.0-ce
           releaseType: stable
       - task: Bash@3
+        displayName: print env variables
         inputs:
           targetType: 'inline'
           script: 'env | sort'
