@@ -10,4 +10,4 @@ steps:
     releaseType: stable
 - bash: for i in {1..120}; do echo "count:"" $i" && sleep 1s; done
   displayName: wait 2 min.
-  target: "ubuntu:18.04"
+  target: "ubuntu:latest"
