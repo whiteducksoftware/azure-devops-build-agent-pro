@@ -9,6 +9,7 @@ jobs:
       inputs:
        dockerVersion: 17.09.0-ce
        releaseType: stable
+    - bash: echo $PATH
 - job: runInContainer
   #container: ubuntu:latest
   dependsOn: dockerInstall
