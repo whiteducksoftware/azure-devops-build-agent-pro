@@ -2,14 +2,14 @@ pool: "dbr-vmss-test"
 #trigger:
 #  - dbr-containerjob-test
 jobs:
-- job: install Docker on vm
+- job: dockerInstall
   steps:
     - task: DockerInstaller@0
       displayName: Docker Installer
       inputs:
        dockerVersion: 17.09.0-ce
        releaseType: stable
-- job: execute step in container
+- job: runInContainer
   container: ubuntu:latest
   steps:
     - bash: for i in {1..120}; do echo "count:"" $i" && sleep 1s; done
