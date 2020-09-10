@@ -1,6 +1,5 @@
 pool: "dbr-vmss-test-pool"
-#trigger:
-#  - dbr-containerjob-test
+trigger: none
 jobs:
   - job: prepSteps
     steps:
