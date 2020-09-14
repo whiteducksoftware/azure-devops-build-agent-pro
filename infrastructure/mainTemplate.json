@@ -11,9 +11,23 @@
         },
         "vmssName": {
             "type": "string",
-            "defaultValue": "ubuntu-vmss",
+            "defaultValue": "new-vmss",
+            "minLength": 1,
+            "maxLength": 9,
             "metadata": {
                 "description": "String used as a base for naming resources (9 characters or less). A hash is prepended to this string for some resources, and resource-specific information is appended."
+            }
+        },
+        "osType": {
+            "type": "object",
+            "defaultValue": {
+                "publisher": "Canonical",
+                "offer": "UbuntuServer",
+                "sku": "18.04-LTS",
+                "version": "latest"
+            },
+            "metadata": {
+                "description": "Base OS for VMs"
             }
         },
         "instanceSize": {
@@ -26,11 +40,9 @@
         "osDiskType": {
             "type": "String",
             "defaultValue": "Standard_LRS",
-            "allowedValues": [
-                "Standard_LRS",
-                "StandardSSD_LRS",
-                "UltraSSD_LRS"
-            ]
+            "metadata": {
+                "description": "Type of disk to use"
+            }
         },
         "adminUsername": {
             "type": "string",
@@ -71,7 +83,7 @@
         },
         "publicIpDns": {
             "type": "string",
-            "defaultValue": "[concat('linux-vmss-', uniqueString(resourceGroup().id))]",
+            "defaultValue": "[concat(parameters('vmssName'),'-', uniqueString(resourceGroup().id))]",
             "metadata": {
                 "description": "DNS of the public ip address for the VM"
             }
@@ -101,22 +113,18 @@
     },
     "functions": [],
     "variables": {
+        "resourcesPrefix": "[uniqueString(resourceGroup().id)]",
+        "vmssResourceName": "[concat(variables('resourcesPrefix'), '-', parameters('vmssName'))]",
         "singlePlacementGroup": "true",
         "addressPrefix": "10.0.0.0/16",
         "subnetPrefix": "10.0.0.0/24",
-        "securityGroupName": "[concat(parameters('vmssName'), 'nsgrg')]",
+        //"securityGroupName": "[concat(parameters('vmssName'), 'nsgrg')]",
         "publicIPAddressName": "[concat(parameters('vmssName'), 'pip')]",
         "nicName": "[concat(parameters('vmssName'), 'nic')]",
         "subnetName": "[concat(parameters('vmssName'), 'subnet')]",
         "virtualNetworkName": "[concat(parameters('vmssName'), 'vnet')]",
         "ipConfigName": "[concat(parameters('vmssName'), 'ipconfig')]",
-        "osType": {
-            "publisher": "Canonical",
-            "offer": "UbuntuServer",
-            "sku": "16.04-LTS",
-            "version": "latest"
-        },
-        "imageReference": "[variables('osType')]",
+        "imageReference": "[parameters('osType')]",
         "linuxConfiguration": {
             "disablePasswordAuthentication": true,
             "ssh": {
@@ -136,6 +144,9 @@
             "name": "[variables('virtualNetworkName')]",
             "location": "[parameters('location')]",
             "apiVersion": "2020-05-01",
+            "tags": {
+                "ownerVmssName": "variables('vmResourceName')"
+            },
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
@@ -161,13 +172,16 @@
             "sku": {
                 "name": "[parameters('publicIpSku')]"
             },
+            "tags": {
+                "ownerVmssName": "variables('vmResourceName')"
+            },
             "properties": {
                 "publicIPAllocationMethod": "[parameters('publicIpAllocationMethod')]",
                 "dnsSettings": {
                     "domainNameLabel": "[parameters('publicIpDns')]"
                 }
             }
-        },
+        }, /*
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2019-02-01",
@@ -191,7 +205,7 @@
                     }
                 ]
             }
-        },
+        },*/
         {
             "type": "Microsoft.Compute/virtualMachineScaleSets",
             "name": "[parameters('vmssName')]",
@@ -204,6 +218,9 @@
                 "name": "[parameters('instanceSize')]",
                 "tier": "Standard",
                 "capacity": 0
+            },
+            "tags": {
+                "ownerVmssName": "variables('vmResourceName')"
             },
             "properties": {
                 "overprovision": "false",
