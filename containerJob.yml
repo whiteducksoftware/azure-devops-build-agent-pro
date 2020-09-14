@@ -3,10 +3,6 @@ trigger: none
 jobs:
   - job: prepSteps
     steps:
-#      - task: ShellScript@2
-#       displayName: run docker install script
-#        inputs:
-#          scriptPath: ./scripts/docker-install.sh
 #      - task: DockerInstaller@0
 #        displayName: Docker CLI Installer
 #        inputs:

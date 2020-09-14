@@ -19,13 +19,8 @@
             }
         },
         "osType": {
-            "type": "object",
-            "defaultValue": {
-                "publisher": "Canonical",
-                "offer": "UbuntuServer",
-                "sku": "18.04-LTS",
-                "version": "latest"
-            },
+            "type": "string",
+            "defaultValue": "18.04-LTS",
             "metadata": {
                 "description": "Base OS for VMs"
             }
@@ -124,7 +119,12 @@
         "subnetName": "[concat(parameters('vmssName'), 'subnet')]",
         "virtualNetworkName": "[concat(parameters('vmssName'), 'vnet')]",
         "ipConfigName": "[concat(parameters('vmssName'), 'ipconfig')]",
-        "imageReference": "[parameters('osType')]",
+        "imageReference": {
+            "publisher": "Canonical",
+                "offer": "UbuntuServer",
+                "sku": "[parameters('osType')]",
+                "version": "latest"
+        },
         "linuxConfiguration": {
             "disablePasswordAuthentication": true,
             "ssh": {
@@ -145,7 +145,7 @@
             "location": "[parameters('location')]",
             "apiVersion": "2020-05-01",
             "tags": {
-                "ownerVmssName": "variables('vmResourceName')"
+                "ownerVmssName": "[variables('vmssResourceName')]"
             },
             "properties": {
                 "addressSpace": {
@@ -173,7 +173,7 @@
                 "name": "[parameters('publicIpSku')]"
             },
             "tags": {
-                "ownerVmssName": "variables('vmResourceName')"
+                "ownerVmssName": "[variables('vmssResourceName')]"
             },
             "properties": {
                 "publicIPAllocationMethod": "[parameters('publicIpAllocationMethod')]",
@@ -220,7 +220,7 @@
                 "capacity": 0
             },
             "tags": {
-                "ownerVmssName": "variables('vmResourceName')"
+                "ownerVmssName": "[variables('vmssResourceName')]"
             },
             "properties": {
                 "overprovision": "false",

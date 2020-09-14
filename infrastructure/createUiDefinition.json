@@ -1,0 +1,270 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+    "handler": "Microsoft.Azure.CreateUIDef",
+    "version": "0.1.2-preview",
+    "parameters": {
+        "resourceTypes": [
+            "microsoft.resources/resourcegroups"
+        ],
+        "basics": [
+            {
+				"name": "resourcesConfig",
+                "type": "Microsoft.Common.Section",
+                "label": "Resources configuration",
+                "elements": [
+                    {
+                		"name": "vmssName",
+                		"type": "Microsoft.Common.TextBox",
+                		"label": "VM Scale set name",
+                		"defaultValue": "new-vmss",
+                		"toolTip": "String used as a base for naming resources (9 characters or less). A hash is prepended to this string for some resources, and resource-specific information is appended.",
+                		"constraints": {
+                    		"required": true,
+                    		"regex": "^[a-z][a-zA-Z0-9_-]{1,14}[a-zA-Z0-9_-]$",
+                    		"validationMessage": "The value should have 9 or less characters. It must contain only letters and numbers."
+                		},
+                		"visible": true
+					}
+				]		
+            },
+			{
+                "name": "vmCredentials",
+                "type": "Microsoft.Common.Section",
+                "label": "VM credentials",
+                "elements": [
+					{
+                		"name": "authenticationType",
+                		"type": "Microsoft.Common.OptionsGroup",
+                		"label": "Authentication Type",
+                		"defaultValue": "password",
+                		"toolTip": "Type of authentication to use on the Virtual Machine. SSH key is recommended.",
+                		"constraints": {
+                    		"required": true,
+                    		"allowedValues": [
+                        		{
+                            		"label": "sshPublicKey",
+                           			"value": "sshPublicKey"
+                      			},
+                        		{
+                            		"label": "password",
+                            		"value": "password"
+                        		}
+                    		]
+                		},
+                		"visible": true
+            		},
+                    {
+                		"name": "adminUsername",
+                		"type": "Microsoft.Common.TextBox",
+                		"label": "Username",
+                		"defaultValue": "",
+                		"toolTip": "Admin username on all VMs.",
+                		"constraints": {
+                    		"required": true,
+                            "regex": "^[a-z0-9A-Z]{1,30}$",
+                            "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+                		},
+						"osPlatform": "Linux",
+                		"visible": true
+                    },
+                    {
+                		"name": "adminPasswordOrKey",
+                		"type": "Microsoft.Common.PasswordBox",
+                		"label": {
+                    		"password": "Password Or Key",
+                    		"confirmPassword": "Confirm password"
+                		},
+                		"toolTip": "SSH Key or password for the Virtual Machine. SSH key is recommended.",
+                		"constraints": {
+                    		"required": true,
+                    		"regex": "",
+                    		"validationMessage": ""
+                		},
+                		"options": {
+                    		"hideConfirmation": true
+                		},
+                		"visible": true
+                    }
+                ],
+                "visible": true
+            },
+			{
+                "name": "osVersion",
+                "type": "Microsoft.Common.DropDown",
+                "label": "VM OS version",
+                "defaultValue": "Ubuntu 18.04 (Long Term Support)",
+                "toolTip": "Choose an OS version. We recommend to use the latest Long Term Support Version.",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": [
+                        {
+                            "label": "Ubuntu 18.04 (Long Term Support)",
+                            "value": "18.04-LTS"
+                        },
+                        {
+                            "label": "Ubuntu 16.04 (Long Term Support)",
+                            "value": "16.04-LTS"
+                        }
+                    ]
+                },
+                "visible": true
+            },
+            {
+                "name": "publicIpNewOrExisting",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Public Ip New Or Existing",
+                "defaultValue": "new",
+                "toolTip": "Determines whether or not a new public ip should be provisioned.",
+                "constraints": {
+                    "required": false,
+                    "regex": "",
+                    "validationMessage": ""
+                },
+                "visible": true
+            },
+            {
+                "name": "virtualNetworkNewOrExisting",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Virtual Network New Or Existing",
+                "defaultValue": "new",
+                "toolTip": "Determines whether or not a new virtual network should be provisioned.",
+                "constraints": {
+                    "required": false,
+                    "regex": "",
+                    "validationMessage": ""
+                },
+                "visible": true
+            },
+            {
+                "name": "publicIpDns",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Public Ip Dns",
+                "defaultValue": "[[concat(parameters('vmssName'),'-', uniqueString(resourceGroup().id))]",
+                "toolTip": "DNS of the public ip address for the VM",
+                "constraints": {
+                    "required": false,
+                    "regex": "",
+                    "validationMessage": ""
+                },
+                "visible": true
+            },
+            {
+                "name": "publicIpSku",
+                "type": "Microsoft.Common.DropDown",
+                "label": "Public Ip Sku",
+                "defaultValue": "Basic",
+                "toolTip": "Name of the resource group for the public ip address",
+                "constraints": {
+                    "required": false,
+                    "allowedValues": [
+                        {
+                            "label": "Basic",
+                            "value": "Basic"
+                        },
+                        {
+                            "label": "Standard",
+                            "value": "Standard"
+                        }
+                    ]
+                },
+                "visible": true
+            },
+            {
+                "name": "publicIpAllocationMethod",
+                "type": "Microsoft.Common.DropDown",
+                "label": "Public Ip Allocation Method",
+                "defaultValue": "Dynamic",
+                "toolTip": "Allocation method for the public ip address",
+                "constraints": {
+                    "required": false,
+                    "allowedValues": [
+                        {
+                            "label": "Dynamic",
+                            "value": "Dynamic"
+                        },
+                        {
+                            "label": "Static",
+                            "value": "Static"
+                        }
+                    ]
+                },
+                "visible": true
+            }
+        ],
+        "steps": [
+			{
+				"name": "vmSizeSelector",
+                "label": "VM + OS Disk settings",
+                "subLabel": {
+                    "preValidation": "Chose a VM Size. We strongly recommend to Premium SSD.",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "VM + Disk settings",
+				"elements": [
+					{
+                        "name": "vmSize",
+                        "type": "Microsoft.Compute.SizeSelector",
+                        "label": "VM Size",
+                        "toolTip": "Select a size for your VM",
+                        "recommendedSizes": [
+                            "Standard_B1ms",
+                            "Standard_B2ms"
+                        ],
+                        "options": {
+                            "hideDiskTypeFilter": false
+                        },
+                        "osPlatform": "Linux",
+                        "imageReference": {
+                            "publisher": "Canonical",
+                            "offer": "UbuntuServer",
+                            "sku": "[basics('Linux_OS_Version')]"
+                        },
+                        "count": 0,
+                        "visible": true
+                    },
+					{
+                		"name": "osDiskType",
+                		"type": "Microsoft.Common.DropDown",
+                		"label": "OS Disk type",
+                		"defaultValue": "Standard_LRS",
+                		"toolTip": "Type of disk to use",
+                		"constraints": {
+                    		"allowedValues": [
+                        		{
+                        			"label": "Standard_LRS",
+                            		"value": "Standard_LRS"
+                        		},
+                        		{
+                            		"label": "Premium_LRS",
+                            		"value": "Premium_LRS"
+                        		},
+								{
+                            		"label": "StandardSSD_LRS",
+                            		"value": "StandardSSD_LRS"
+                        		}
+                    		],
+                    		"required": true
+                		},
+                		"visible": true
+            }
+
+				]
+			}
+		],
+        "outputs": {
+            "location": "[basics('location')]",
+            "vmssName": "[basics('vmssName')]",
+            "osType": "[basics('osType')]",
+            "instanceSize": "[basics('instanceSize')]",
+            "osDiskType": "[basics('osDiskType')]",
+            "adminUsername": "[basics('adminUsername')]",
+            "authenticationType": "[basics('authenticationType')]",
+            "adminPasswordOrKey": "[basics('adminPasswordOrKey')]",
+            "publicIpNewOrExisting": "[basics('publicIpNewOrExisting')]",
+            "virtualNetworkNewOrExisting": "[basics('virtualNetworkNewOrExisting')]",
+            "publicIpDns": "[basics('publicIpDns')]",
+            "publicIpSku": "[basics('publicIpSku')]",
+            "publicIpAllocationMethod": "[basics('publicIpAllocationMethod')]"
+        }
+    }
+}
