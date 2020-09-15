@@ -2,13 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "location": {
-            "type": "string",
-            "defaultValue": "[resourceGroup().location]",
-            "metadata": {
-                "description": "Location for the resources."
-            }
-        },
         "vmssName": {
             "type": "string",
             "defaultValue": "new-vmss",
@@ -66,6 +59,7 @@
     "functions": [],
     "variables": {
         "resourcesPrefix": "[uniqueString(resourceGroup().id)]",
+        "location": "[resourceGroup().location]",
         "vmssResourceName": "[concat(variables('resourcesPrefix'), '-', parameters('vmssName'))]",
         "singlePlacementGroup": "true",
         "addressPrefix": "10.0.0.0/16",
@@ -95,13 +89,14 @@
                     }
                 ]
             }
-        }
+        },
+        "customDataEncoded": "I2Nsb3VkLWNvbmZpZwoKcGFja2FnZXM6CiAgLSBhcHQtdHJhbnNwb3J0LWh0dHBzCiAgLSBjYS1jZXJ0aWZpY2F0ZXMKICAtIGN1cmwKICAtIGdudXBnLWFnZW50CiAgLSBzb2Z0d2FyZS1wcm9wZXJ0aWVzLWNvbW1vbgoKIyBFbmFibGUgaXB2NCBmb3J3YXJkaW5nLCByZXF1aXJlZCBvbiBDSVMgaGFyZGVuZWQgbWFjaGluZXMKI3dyaXRlX2ZpbGVzOgojICAtIHBhdGg6IC9ldGMvc3lzY3RsLmQvOTktZW5hYmxlLWlwdjQtZm9yd2FyZGluZy5jb25mCiMgICAgY29udGVudDogfAojICAgICBuZXQuaXB2NC5jb25mLmFsbC5mb3J3YXJkaW5nPTEKIyBjcmVhdGUgdGhlIGRvY2tlciBncm91cApncm91cHM6CiAgLSBkb2NrZXIKCiMgQWRkIGRlZmF1bHQgYXV0byBjcmVhdGVkIHVzZXIgdG8gZG9ja2VyIGdyb3VwCiNzeXN0ZW1faW5mbzoKIyAgZGVmYXVsdF91c2VyOgojICAgIGdyb3VwczogW2RvY2tlcl0KCiMgSW5zdGFsbCBEb2NrZXIsIGZvciBwcm9kdWN0aW9uLCBjb25zaWRlciBwaW5uaW5nIHRvIHN0YWJsZSB2ZXJzaW9ucwpydW5jbWQ6CiAgLSBjdXJsIC1mc1NMIGh0dHBzOi8vZG93bmxvYWQuZG9ja2VyLmNvbS9saW51eC91YnVudHUvZ3BnIHwgYXB0LWtleSBhZGQgLQogIC0gYWRkLWFwdC1yZXBvc2l0b3J5ICJkZWIgW2FyY2g9YW1kNjRdIGh0dHBzOi8vZG93bmxvYWQuZG9ja2VyLmNvbS9saW51eC91YnVudHUgJChsc2JfcmVsZWFzZSAtY3MpIHN0YWJsZSIKICAtIGFwdC1nZXQgdXBkYXRlIC15CiAgLSBhcHQtZ2V0IGluc3RhbGwgLXkgZG9ja2VyLWNlIGRvY2tlci1jZS1jbGkgY29udGFpbmVyZC5pbwogIC0gc3lzdGVtY3RsIHN0YXJ0IGRvY2tlcgogIC0gc3lzdGVtY3RsIGVuYWJsZSBkb2NrZXI="
     },
     "resources": [
         {
             "type": "Microsoft.Network/virtualNetworks",
             "name": "[variables('virtualNetworkName')]",
-            "location": "[parameters('location')]",
+            "location": "[variables('location')]",
             "apiVersion": "2020-05-01",
             "tags": {
                 "ownerVmssName": "[variables('vmssResourceName')]"
@@ -125,7 +120,7 @@
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "name": "[variables('publicIPAddressName')]",
-            "location": "[parameters('location')]",
+            "location": "[variables('location')]",
             "apiVersion": "2020-05-01",
             "sku": {
                 "name": "[variables('publicIpSku')]"
@@ -167,7 +162,7 @@
         {
             "type": "Microsoft.Compute/virtualMachineScaleSets",
             "name": "[parameters('vmssName')]",
-            "location": "[parameters('location')]",
+            "location": "[variables('location')]",
             "apiVersion": "2019-12-01",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
@@ -201,6 +196,7 @@
                         "computerNamePrefix": "[parameters('vmssName')]",
                         "adminUsername": "[parameters('adminUsername')]",
                         "adminPassword": "[parameters('adminPasswordOrKey')]",
+                        "customData": "[variables('customDataEncoded')]",
                         "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
                     },
                     "networkProfile": {
