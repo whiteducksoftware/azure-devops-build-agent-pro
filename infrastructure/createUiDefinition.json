@@ -170,13 +170,14 @@
 			}
 		],
         "outputs": {
-            "vmssName": "[basics('vmssName')]",
-            "osType": "[steps('osVersion')]",
-            "instanceSize": "[steps('vmSize')]",
-            "osDiskType": "[steps('osDiskType')]",
-            "adminUsername": "[basics('adminUsername')]",
-            "authenticationType": "[basics('authenticationType')]",
-            "adminPasswordOrKey": "[basics('adminPasswordOrKey')]"
+			"location": "[location()]",
+            "vmssName": "[basics('resourcesConfig').vmssName]",
+            "osType": "[steps('vmSizeSelector').osVersion]",
+            "instanceSize": "[steps('vmSizeSelector').vmSize]",
+            "osDiskType": "[steps('vmSizeSelector').osDiskType]",
+            "adminUsername": "[basics('vmCredentials').adminUsername]",
+            "authenticationType": "[basics('vmCredentials').authenticationType]",
+            "adminPasswordOrKey": "[basics('vmCredentials').adminPasswordOrKey]"
         }
     }
 }
