@@ -3,7 +3,7 @@ on:
   push:
     branches: [ dbr_#10 ]
 jobs:
-  zip-files:
+  zip-files-and-release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
