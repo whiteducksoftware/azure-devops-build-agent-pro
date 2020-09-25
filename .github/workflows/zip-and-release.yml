@@ -1,7 +1,8 @@
 name: Create Release Asset
 on:
   push:
-    branches: [ dbr_#10 ]
+    tags:
+      - 'v*'
 jobs:
   zip-files-and-release:
     runs-on: ubuntu-latest
