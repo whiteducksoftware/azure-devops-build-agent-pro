@@ -60,10 +60,25 @@
             "metadata": {
                 "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
             }
+        },
+        "_artifactsLocation": {
+            "type": "string",
+            "metadata": {
+                "description": "The base URI where artifacts required by this template are located including a trailing '/'"
+            },
+            "defaultValue": "[deployment().properties.templateLink.uri]" //use this for the Azure marketplace
+        },
+        "_artifactsLocationSasToken": {
+            "type": "securestring",
+            "metadata": {
+                "description": "The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated. Use the defaultValue if the staging location is not secured."
+            },
+            "defaultValue": ""
         }
     },
     "functions": [],
     "variables": {
+        "customData": "[concat('#include\n', uri(parameters('_artifactsLocation'), concat('scripts/cloud-init.txt', parameters('_artifactsLocationSasToken'))))]",
         "resourcesPrefix": "[uniqueString(resourceGroup().id)]",
         "vmssResourceName": "[concat(variables('resourcesPrefix'), '-', parameters('vmssName'))]",
         "singlePlacementGroup": "true",
@@ -93,8 +108,7 @@
                     }
                 ]
             }
-        },
-        "customDataEncoded": "I2Nsb3VkLWNvbmZpZw0KDQpwYWNrYWdlczoNCiAgLSBhcHQtdHJhbnNwb3J0LWh0dHBzDQogIC0gY2EtY2VydGlmaWNhdGVzDQogIC0gY3VybA0KICAtIGdudXBnLWFnZW50DQogIC0gc29mdHdhcmUtcHJvcGVydGllcy1jb21tb24NCg0KZ3JvdXBzOg0KICAtIGRvY2tlcg0KDQpydW5jbWQ6DQogIC0gY3VybCAtZnNTTCBodHRwczovL2Rvd25sb2FkLmRvY2tlci5jb20vbGludXgvdWJ1bnR1L2dwZyB8IGFwdC1rZXkgYWRkIC0NCiAgLSBhZGQtYXB0LXJlcG9zaXRvcnkgImRlYiBbYXJjaD1hbWQ2NF0gaHR0cHM6Ly9kb3dubG9hZC5kb2NrZXIuY29tL2xpbnV4L3VidW50dSAkKGxzYl9yZWxlYXNlIC1jcykgc3RhYmxlIg0KICAtIGFwdC1nZXQgdXBkYXRlIC15DQogIC0gYXB0LWdldCBpbnN0YWxsIC15IGRvY2tlci1jZT01OjE5LjAzLjEwfjMtMH51YnVudHUtYmlvbmljIGRvY2tlci1jZS1jbGk9NToxOS4wMy4xMH4zLTB+dWJ1bnR1LWJpb25pYyBjb250YWluZXJkLmlvDQogIC0gc3lzdGVtY3RsIHN0YXJ0IGRvY2tlcg0KICAtIHN5c3RlbWN0bCBlbmFibGUgZG9ja2Vy"
+        }
     },
     "resources": [
         {
@@ -189,7 +203,7 @@
                         "computerNamePrefix": "[parameters('vmssName')]",
                         "adminUsername": "[parameters('adminUsername')]",
                         "adminPassword": "[parameters('adminPasswordOrKey')]",
-                        "customData": "[variables('customDataEncoded')]",
+                        "customData": "[base64(variables('customData'))]",
                         "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
                     },
                     "networkProfile": {

@@ -2,7 +2,7 @@ pool: "dbr-vmss-test-pool"
 trigger: none
 jobs:
   - job: runInContainer
-    container: alpine:latest
+    container: debian:latest
     steps:
       - bash: cat /etc/os-release
         displayName: print os 
