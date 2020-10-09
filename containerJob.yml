@@ -1,7 +1,7 @@
 pool: "dbr-vmss-test-pool"
 trigger: none
 jobs:
-  - job: print host os
+  - job: printHostOs
     steps:
       - bash: cat /etc/os-release
       - task: Bash@3
