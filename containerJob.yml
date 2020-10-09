@@ -1,14 +1,17 @@
 pool: "dbr-vmss-test-pool"
 trigger: none
 jobs:
-  - job: runInContainer
-    container: debian:latest
+  - job: print host os
     steps:
+      - bash: cat /etc/os-release
       - task: Bash@3
         displayName: print env variables
         inputs:
           targetType: 'inline'
           script: 'env | sort'
+  - job: runInContainer
+    container: debian:latest
+    steps:
       - bash: cat /etc/os-release
         displayName: print os 
       - bash: for i in {1..120}; do echo "count:"" $i" && sleep 1s; done
