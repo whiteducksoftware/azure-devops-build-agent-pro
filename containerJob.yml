@@ -1,4 +1,4 @@
-pool: "dbr-vmss-test-pool"
+pool: "dbr"
 trigger: none
 jobs:
   - job: runInContainer
