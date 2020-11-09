@@ -44,21 +44,10 @@
                 "description": "Admin username on all VMs."
             }
         },
-        "authenticationType": {
-            "type": "string",
-            "defaultValue": "password",
-            "allowedValues": [
-                "sshPublicKey",
-                "password"
-            ],
-            "metadata": {
-                "description": "Type of authentication to use on the Virtual Machine. SSH key is recommended."
-            }
-        },
-        "adminPasswordOrKey": {
+        "adminPassword": {
             "type": "securestring",
             "metadata": {
-                "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
+                "description": "Password for the Virtual Machine."
             }
         },
         "_artifactsLocation": {
@@ -97,17 +86,6 @@
             "offer": "UbuntuServer",
             "sku": "[parameters('osType')]",
             "version": "latest"
-        },
-        "linuxConfiguration": {
-            "disablePasswordAuthentication": true,
-            "ssh": {
-                "publicKeys": [
-                    {
-                        "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
-                        "keyData": "[parameters('adminPasswordOrKey')]"
-                    }
-                ]
-            }
         }
     },
     "resources": [
@@ -202,10 +180,8 @@
                     "osProfile": {
                         "computerNamePrefix": "[parameters('vmssName')]",
                         "adminUsername": "[parameters('adminUsername')]",
-                        "adminPassword": "[parameters('adminPasswordOrKey')]",
-                        "customData": "[base64(variables('customData'))]",
-                        "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
-                    },
+                        "adminPassword": "[parameters('adminPassword')]",
+                        "customData": "[base64(variables('customData'))]"                    },
                     "networkProfile": {
                         "networkInterfaceConfigurations": [
                             {
