@@ -32,27 +32,6 @@
 				"label": "VM credentials",
 				"elements": [
 					{
-						"name": "authenticationType",
-						"type": "Microsoft.Common.OptionsGroup",
-						"label": "Authentication Type",
-						"defaultValue": "password",
-						"toolTip": "Type of authentication to use on the Virtual Machine. SSH key is recommended.",
-						"constraints": {
-							"required": true,
-							"allowedValues": [
-								{
-									"label": "sshPublicKey",
-									"value": "sshPublicKey"
-								},
-								{
-									"label": "password",
-									"value": "password"
-								}
-							]
-						},
-						"visible": true
-					},
-					{
 						"name": "adminUsername",
 						"type": "Microsoft.Common.TextBox",
 						"label": "Username",
@@ -67,20 +46,20 @@
 						"visible": true
 					},
 					{
-						"name": "adminPasswordOrKey",
+						"name": "adminPassword",
 						"type": "Microsoft.Common.PasswordBox",
 						"label": {
-							"password": "Password Or Key",
+							"password": "Password",
 							"confirmPassword": "Confirm password"
 						},
-						"toolTip": "SSH Key or password for the Virtual Machine. SSH key is recommended.",
+						"toolTip": "Password for the Virtual Machine.",
 						"constraints": {
 							"required": true,
 							"regex": "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$",
 							"validationMessage": "Passwords must be at least 8 characters long, contain a letter, a number, and a special character"
 						},
 						"options": {
-							"hideConfirmation": "[if(equals(coalesce(basics('vmCredentials').authenticationType, null), 'password'), false, true)]"
+							"hideConfirmation": false
 						},
 						"visible": true
 					}
@@ -175,8 +154,7 @@
 			"instanceSize": "[steps('vmSizeSelector').vmSize]",
 			"osDiskType": "[steps('vmSizeSelector').osDiskType]",
 			"adminUsername": "[basics('vmCredentials').adminUsername]",
-			"authenticationType": "[basics('vmCredentials').authenticationType]",
-			"adminPasswordOrKey": "[basics('vmCredentials').adminPasswordOrKey]"
+			"adminPassword": "[basics('vmCredentials').adminPassword]"
 		}
 	}
 }
