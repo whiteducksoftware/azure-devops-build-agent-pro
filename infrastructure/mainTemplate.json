@@ -126,24 +126,7 @@
                 ]
             }
         },
-        {
-            "type": "Microsoft.Network/publicIPAddresses",
-            "name": "[variables('publicIPAddressName')]",
-            "location": "[parameters('location')]",
-            "apiVersion": "2020-05-01",
-            "sku": {
-                "name": "[variables('publicIpSku')]"
-            },
-            "tags": {
-                "ownerVmssName": "[variables('vmssResourceName')]"
-            },
-            "properties": {
-                "publicIPAllocationMethod": "[variables('publicIpAllocationMethod')]",
-                "dnsSettings": {
-                    "domainNameLabel": "[variables('publicIpDns')]"
-                }
-            }
-        },
+
         {
             "type": "Microsoft.Compute/virtualMachineScaleSets",
             "name": "[parameters('vmssName')]",

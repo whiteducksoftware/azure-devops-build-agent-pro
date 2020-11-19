@@ -14,5 +14,5 @@ jobs:
     steps:
       - bash: cat /etc/os-release
         displayName: print os 
-      - bash: for i in {1..120}; do echo "count:"" $i" && sleep 1s; done
+      - bash: for i in {1..30}; do echo "count:"" $i" && sleep 1s; done
         displayName: wait 2 min.
