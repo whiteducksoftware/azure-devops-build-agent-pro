@@ -15,6 +15,7 @@ In case there is the need to connect to a VM you can use Vnet peering and Azure 
 #### Set up Vnet peering:
 - Select the newly created Vnet
 - In the **Peerings** blade under *Settings*, click **Add**
+
 ![peering](./img/peering.png)
 - Input a Peering link name for this virtual network and for the remote virtual network
 - Select the correct Subscription and virtual network (Vnet of the scale set)
@@ -23,6 +24,7 @@ In case there is the need to connect to a VM you can use Vnet peering and Azure 
 #### Connect to the VM
 - Select the VM instance to connect to
 - Click **Connect** and select the option **Bastion**
+
 ![peering](./img/connect.png)
 - Click **Use Bastion** and input the login credentials for the VM
 - Click **Connect**
