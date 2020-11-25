@@ -71,7 +71,7 @@
         "resourcesPrefix": "[uniqueString(resourceGroup().id)]",
         "vmssResourceName": "[concat(variables('resourcesPrefix'), '-', parameters('vmssName'))]",
         "singlePlacementGroup": "true",
-        "addressPrefix": "192.168.0.0/16",
+        "addressPrefix": "192.168.0.0/24",
         "subnetPrefix": "192.168.0.0/24",
         "publicIPAddressName": "[concat(parameters('vmssName'), 'pip')]",
         "publicIpSku": "Basic",
