@@ -1,4 +1,4 @@
-name: approval-workflow.yml
+name: Label PR
 on: pull_request_review
 jobs:
   labelWhenApproved:
