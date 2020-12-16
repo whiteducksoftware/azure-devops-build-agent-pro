@@ -31,7 +31,7 @@ stages:
         arguments: --platform linux/arm64
 ```
 
-This is en example for a corresponding Dockerfile:
+This is an example for a corresponding Dockerfile:
 
 ``` Dockerfile
 FROM arm64v8/ubuntu:20.04
