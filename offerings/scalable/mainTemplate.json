@@ -74,7 +74,7 @@
     },
     "functions": [],
     "variables": {
-        "customData": "[concat('#include\n', uri(parameters('_artifactsLocation'), concat('scripts/cloud-init.yml', parameters('_artifactsLocationSasToken'))))]",
+        "customData": "[concat('#include\n', uri(parameters('_artifactsLocation'), concat('assets/cloud-init.yml', parameters('_artifactsLocationSasToken'))))]",
         "resourcesPrefix": "[uniqueString(resourceGroup().id)]",
         "vmssResourceName": "[concat(variables('resourcesPrefix'), '-', parameters('vmssName'))]",
         "singlePlacementGroup": "true",

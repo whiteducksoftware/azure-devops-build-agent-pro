@@ -83,8 +83,7 @@
 						"label": "VM Size",
 						"toolTip": "Select a size for your VM",
 						"recommendedSizes": [
-							"Standard_B1ms",
-							"Standard_B2ms"
+							"Standard_DS2_v2"
 						],
 						"options": {
 							"hideDiskTypeFilter": false
