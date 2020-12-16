@@ -6,7 +6,7 @@ After deployment it is required to connect the newly created scale set with Azur
 
 ## Create a scale set agent pool
 
-- Open the *Organisation Settings* in your DevOps Organisation
+- Open the *Organisation Settings* or *Project Settings* in Azure DevOps
 - Navigate to **Agent pools** under the **Pipelines** section and click **Add pool**
 
 ![agent_pools](img/agent_pools.png)
@@ -19,11 +19,9 @@ After deployment it is required to connect the newly created scale set with Azur
 
 After creation, Azure DevOps will start provisioning build VM's according to the specified pool settings
 
-Helpful links:
+Helpful links: [Create a scale set agent pool](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/scale-set-agents?view=azure-devops#create-the-scale-set-agent-pool)
 
-[Create a scale set agent pool](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/scale-set-agents?view=azure-devops#create-the-scale-set-agent-pool)
-
-## Connect to a VM for troubleshooting
+## Connect to a VM for troubleshooting purpose
 
 By default all VM's inside the scale set are not provisioned with a public IP, thus can not be reached from outside e.g. trough SSH.
 In case there is the need to connect to a VM you can use vNet peering and Azure Bastion. There are a couple important steps when creating the vNet.
