@@ -34,9 +34,11 @@ stages:
 This is en example for a corresponding Dockerfile:
 
 ``` Dockerfile
-FROM --platform=linux/arm64 ubuntu:20.04
+FROM arm64v8/ubuntu:20.04
 
 RUN echo "hello!"
+
+CMD ["/bin/bash"]
 ```
 
 More details on the Azure DevOps Docker job are available [here](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/build/docker?view=azure-devops).
