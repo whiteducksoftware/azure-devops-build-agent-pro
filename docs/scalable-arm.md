@@ -1,5 +1,7 @@
 # Build Agent SCALABLE - ARM jobs
 
+The Build Agent SCALABLE supports running ARM-based container jobs as well as container image build. This gives you multiple options to build your code in case cross-compiling isn't possible for your use case. 
+
 ## Docker builds based on ARM images
 
 The Azure DevOps Docker job can be used to build container images based on ARM architecture. Find a sample to get started below:
