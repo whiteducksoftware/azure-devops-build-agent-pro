@@ -17,6 +17,8 @@ This documentation describes the fields for deploying the Build Agent SCALABLE i
 * **Application Name:** set a name for the managed application. The managed application will appear in the resource group you chose above and contain the managed resource group.
 * **Managed Resource Group:** set a name for the managed resource group. This resource group will contain all the actual resources that will be deployed. E.g. VM Scale set, vNet..
 
+![agent_pools](img/basic.png)
+
 
 ## VM + Network settings
 
@@ -24,3 +26,10 @@ This documentation describes the fields for deploying the Build Agent SCALABLE i
 * **OS Disk Type:** choose a disk type, e.g. "Standard SSD"
 * **Virtual network IP address:** set the desired IP address for the vNet. Default is 192.168.0.0/24
 * **Subnet IP address:** set the desired IP address for the subnet. Default is 192.168.0.0/24
+
+![agent_pools](img/settings.png)
+
+
+## Review + create
+
+* Review the deployment settings and agree to the terms and condition for Co-Admin Access. Click on **Create**
