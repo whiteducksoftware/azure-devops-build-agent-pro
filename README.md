@@ -13,6 +13,13 @@ Build Agent SCALABLE offers a generic, containerized and scalable CI/CD environe
 
 Further details and docs are available [here](./docs/scalable.md).
 
-## Build Agent CORE
+> add link to market place offer
 
-> Future version!
+## Build Agent SINGLE WINDOWS VM
+
+Build Agent SINGLE WINDOWS VM is a simple solution template that will deploy a windows based build agent for your Azure DevOps pipelines. 
+
+Check out the documentation [here](./docs/README.md).
+
+> add link to market place offer
+

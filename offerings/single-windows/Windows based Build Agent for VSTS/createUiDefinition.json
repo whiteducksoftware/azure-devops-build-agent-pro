@@ -8,7 +8,7 @@
         "name": "vm_Name",
         "type": "Microsoft.Common.TextBox",
         "label": "Virtual Machine name",
-        "toolTip": "Chose an unique name which identifys your virtual machine.",
+        "toolTip": "Choose an unique name which identifys your virtual machine.",
         "constraints": {
           "required": true,
           "regex": "^[a-z][a-zA-Z0-9_-]{1,12}[a-zA-Z0-9_-]$",
@@ -61,7 +61,7 @@
         "type": "Microsoft.Common.DropDown",
         "label": "VM OS version",
         "defaultValue": "2019-Datacenter",
-        "toolTip": "Choose an OS version. To save costs, chose Windows Server 2019 Core [Smalldisk]. Windows Server 2019 Core [smalldisk] is console only and has just 30GB disk size.",
+        "toolTip": "Choose the OS version. To save costs, chose Windows Server 2019 Core [Smalldisk]. Windows Server 2019 Core [smalldisk] is console only and has just 30GB disk size.",
         "constraints": {
           "allowedValues": [
             {
@@ -82,7 +82,7 @@
         "name": "vm_Size_Selector",
         "label": "VM Size",
         "subLabel": {
-          "preValidation": "Chose a VM Size. We strongly recommend to SSD.",
+          "preValidation": "Choose a VM Size. We strongly recommend to SSD.",
           "postValidation": "Done"
         },
         "bladeTitle": "VM Size",
@@ -140,7 +140,7 @@
           {
             "name": "agent_Pool_Name",
             "type": "Microsoft.Common.TextBox",
-            "label": "Agent Pool",
+            "label": "Agent pool",
             "defaultValue": "Default",
             "toolTip": "Specify the agentpool where your agent will be registered.",
             "constraints": {
@@ -155,7 +155,7 @@
             "type": "Microsoft.Common.TextBox",
             "label": "Agent name",
             "defaultValue": "[basics('vm_Name')]",
-            "toolTip": "Specify a name for your private build agent. Agent names should be unique within a agent pool",
+            "toolTip": "Specify a name for your private build agent. Agent names should be unique within an agent pool",
             "constraints": {
               "required": true,
               "regex": "^[a-z][a-zA-Z0-9_-]{1,14}[a-zA-Z0-9_-]$",
@@ -167,10 +167,10 @@
             "name": "pat_Token",
             "type": "Microsoft.Common.PasswordBox",
             "label": {
-              "password": "Personal Acces Token",
-              "confirmPassword": "Confirm Personal Acces Token"
+              "password": "Personal Access Token",
+              "confirmPassword": "Confirm Personal Access Token"
             },
-            "toolTip": "Enter the Personal Acces Token which would be used to authenticate against Visual Studio Teamservices account to download and configure agent. [How to generate a PAT](https://docs.microsoft.com/en-us/vsts/accounts/use-personal-access-tokens-to-authenticate)",
+            "toolTip": "Enter the Personal Access Token which would be used to authenticate against Visual Studio Teamservices account to download and configure agent. [How to generate a PAT](https://docs.microsoft.com/en-us/vsts/accounts/use-personal-access-tokens-to-authenticate)",
             "constraints": {
               "required": true,
               "regex": "[a-z0-9]{52}",

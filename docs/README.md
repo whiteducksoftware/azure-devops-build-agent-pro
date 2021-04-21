@@ -7,7 +7,8 @@ Choose the docs based on your deployed version:
 
 Deployment guide
 * [Build Agent SCALABLE deployment](./scalable-deployment.md)
+* [Build Agent SINGLE WINDOWS VM deployment](./single-win-vm-deployment.md)
 
 Code examples
-* [Container job](./container-job.md)
-* [Docker build](./docker-build.md)
+* [Container job (SCALABLE)](./container-job.md)
+* [Docker build (SCALABLE)](./docker-build.md)
