@@ -1,6 +1,8 @@
 name: publish-artifact
 on: 
   workflow_dispatch:
+  pull_request:
+    types: [closed]
 
 jobs:
   zip-files-and-release:
