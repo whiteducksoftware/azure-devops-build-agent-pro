@@ -55,7 +55,7 @@
 						"toolTip": "Password for the Virtual Machine.",
 						"constraints": {
 							"required": true,
-							"regex": "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$",
+							"regex": "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{12,}$",
 							"validationMessage": "Passwords must be at least 8 characters long, contain a letter, a number, and a special character"
 						},
 						"options": {

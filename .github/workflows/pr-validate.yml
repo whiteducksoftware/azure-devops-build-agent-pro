@@ -1,0 +1,27 @@
+name: validate-PR
+on: [pull_request, workflow_dispatch]
+jobs:
+  run_ARM_TTK:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run ARM TTK for SCALABLE
+        uses: aliencube/arm-ttk-actions@v0.3
+        id: armtest_scalable
+        with:
+          path: offerings/scalable
+      - name: Run ARM TTK for SINGLE WIN VM
+        uses: aliencube/arm-ttk-actions@v0.3
+        id: armtest_single_win
+        with:
+          path: offerings/single-windows-vm
+      - name: Test result SCALABLE
+        shell: bash
+        continue-on-error: true
+        run: |
+          echo "${{ toJSON(fromJSON(steps.armtest_scalable.outputs.results)) }}"
+      - name: Test result SINGLE WIN VM
+        shell: bash
+        continue-on-error: true
+        run: |
+          echo "${{ toJSON(fromJSON(steps.armtest_single_win.outputs.results)) }}"

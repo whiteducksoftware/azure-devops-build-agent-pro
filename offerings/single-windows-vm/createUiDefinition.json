@@ -159,7 +159,7 @@
             "constraints": {
               "required": true,
               "regex": "^[a-z][a-zA-Z0-9_-]{1,14}[a-zA-Z0-9_-]$",
-              "validationMessage": "The value should not be empty has less then 16 characters. The agent name must contain only letters and numbers."
+              "validationMessage": "The value should not be empty and have less then 16 characters. The agent name must contain only letters and numbers."
             },
             "visible": true
           },
@@ -173,7 +173,7 @@
             "toolTip": "Enter the Personal Access Token which would be used to authenticate against Visual Studio Teamservices account to download and configure agent. [How to generate a PAT](https://docs.microsoft.com/en-us/vsts/accounts/use-personal-access-tokens-to-authenticate)",
             "constraints": {
               "required": true,
-              "regex": "[a-z0-9]{52}",
+              "regex": "[a-z0-9]{52,52}$",
               "validationMessage": "The value should not be empty."
             },
             "options": {
