@@ -11,12 +11,12 @@ jobs:
         name: upload SCALABLE artifact
         with:
           name: scalable
-          path: scalable/
+          path: ${{ github.workspace }}/offerings/scalable/
       - uses: actions/upload-artifact@v1
         name: upload SINGLE WIN VM artifact
         with:
           name: singel_win_vm
-          path: single-win-vm/deployment/
+          path: ${{ github.workspace }}/offerings/single-win-vm/deployment/
 
 
      
