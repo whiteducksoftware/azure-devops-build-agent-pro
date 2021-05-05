@@ -82,7 +82,7 @@
     }
   },
   "variables": {
-    "scriptFileUri": "[uri(parameters('_artifactsLocation'), 'configureVM.ps1']",
+    "scriptFileUri": "[uri(parameters('_artifactsLocation'), 'configureVM.ps1')]",
     "vm_Name": "[parameters('vm_Name')]",
     "vsts_url": "[parameters('vsts_server_url')]",
     "imagePublisher": "MicrosoftWindowsServer",
