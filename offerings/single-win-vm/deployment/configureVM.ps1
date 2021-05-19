@@ -1,4 +1,5 @@
 Param(
+$archive_uri,
 $vsts_URL,
 $agent_Pool,
 $agent_Name,
@@ -51,13 +52,8 @@ WriteLog("download buildagent")
 $downloadDirectory = Join-Path $env:SystemDrive 'agent'
 New-Item -Path $downloadDirectory -ItemType Directory -force | Out-Null
 
-$clnt = new-object System.Net.WebClient
-$url = "https://vstsagentpackage.azureedge.net/agent/2.184.2/vsts-agent-win-x64-2.184.2.zip"
-$file = Join-Path $downloadDirectory ([System.IO.Path]::GetFileName($url))
-$clnt.DownloadFile($url,$file)
-
 WriteLog("expand build agent")
-Expand-Archive -Path $file -DestinationPath $downloadDirectory
+Expand-Archive -Path $archive_uri -DestinationPath $downloadDirectory
 
 
 

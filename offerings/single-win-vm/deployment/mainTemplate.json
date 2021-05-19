@@ -90,6 +90,7 @@
   },
   "variables": {
     "scriptFileUri": "[uri(parameters('_artifactsLocation'), concat('configureVM.ps1', parameters('_artifactsLocationSasToken')))]",
+    "archive_uri": "[uri(parameters('_artifactsLocation'), concat('agent/vsts-agent-win-x64-2.186.1.zip', parameters('_artifactsLocationSasToken')))]",
     "vm_Name": "[parameters('vm_Name')]",
     "vsts_url": "[parameters('vsts_server_url')]",
     "imagePublisher": "MicrosoftWindowsServer",
@@ -549,7 +550,7 @@
               ]
             },
             "protectedSettings": {
-              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File configureVM.ps1', ' -vsts_URL ' , '\"' , variables('vsts_url') , '\"' , ' -agent_Pool ' , '\"',  parameters('agent_pool') , '\"' , ' -agent_Name ' , '\"',  parameters('agent_name') , '\"' , ' -pat_Token ' , '\"' , parameters('pat_token') , '\"')]"
+              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File configureVM.ps1', ' -archive_uri ' , '\"' , variables('archive_uri') , '\"' , ' -vsts_URL ' , '\"' , variables('vsts_url') , '\"' , ' -agent_Pool ' , '\"',  parameters('agent_pool') , '\"' , ' -agent_Name ' , '\"',  parameters('agent_name') , '\"' , ' -pat_Token ' , '\"' , parameters('pat_token') , '\"')]"
             }
           }
         }
